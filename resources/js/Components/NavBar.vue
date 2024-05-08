@@ -33,7 +33,19 @@ const isActive = (href) => {
                 >
             </div>
 
-            <CartButton />
+            <div class="flex items-center">
+                <NavLink :href="route('login')" :active="isActive('login')"
+                    >Login</NavLink
+                >
+                <div class="h-6 w-px bg-gray-200 mx-2"></div>
+                <NavLink
+                    :href="route('register')"
+                    :active="isActive('register')"
+                    >Sign up</NavLink
+                >
+
+                <CartButton class="ml-4" />
+            </div>
         </nav>
     </div>
 </template>
