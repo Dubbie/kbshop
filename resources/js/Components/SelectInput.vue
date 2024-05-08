@@ -29,7 +29,7 @@ const selectedLabel = computed(() => {
 <template>
     <Listbox v-model="selectedItem" as="div" class="relative">
         <ListboxButton
-            class="border border-zinc-300 rounded-md px-2 py-1 text-sm flex items-center justify-between"
+            class="border border-zinc-300 rounded-md px-3 py-1.5 text-sm flex items-center justify-between"
         >
             <p>{{ selectedLabel }}</p>
             <svg

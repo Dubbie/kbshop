@@ -4,6 +4,7 @@ import { onMounted, ref, inject } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import InputLabel from "@/Components/InputLabel.vue";
 import SelectInput from "@/Components/SelectInput.vue";
+import AppButton from "@/Components/AppButton.vue";
 
 const props = defineProps({
     product: Object,
@@ -131,12 +132,12 @@ onMounted(() => {
                         </p>
                     </div>
 
-                    <button
+                    <AppButton
+                        color="blue"
                         @click="handleAddToCart"
-                        class="bg-indigo-500 text-white font-bold py-2 px-4 rounded mt-3 hover:bg-indigo-700"
+                        class="mt-3"
+                        >Add to cart</AppButton
                     >
-                        Add to cart
-                    </button>
                 </div>
             </div>
         </div>

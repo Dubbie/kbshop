@@ -1,5 +1,6 @@
 <script setup>
 import NavLink from "@/Components/NavLink.vue";
+import CartButton from "@/Components/CartButton.vue";
 </script>
 
 <template>
@@ -13,9 +14,7 @@ import NavLink from "@/Components/NavLink.vue";
                 <NavLink :href="route('product.index')">Products</NavLink>
             </div>
 
-            <div class="flex space-x-2">
-                <p>cart</p>
-            </div>
+            <CartButton />
         </nav>
     </div>
 </template>
