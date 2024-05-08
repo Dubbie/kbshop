@@ -1,6 +1,7 @@
 <script setup>
-import { Head, Link } from "@inertiajs/vue3";
+import { Head } from "@inertiajs/vue3";
 import { inject, onMounted, ref } from "vue";
+import NavBar from "@/Components/NavBar.vue";
 
 const props = defineProps({
     title: {
@@ -42,26 +43,7 @@ onMounted(() => {
 <template>
     <Head :title="title" />
     <div>
-        <nav>
-            <p>KBShop</p>
-
-            <div class="flex space-x-2">
-                <Link href="/">Home</Link>
-                <Link :href="route('product.index')">Products</Link>
-            </div>
-        </nav>
-
-        <div>
-            <p>Cart</p>
-            <div>
-                <div v-for="(qty, item) in cart">
-                    <p>{{ item }} - {{ qty }} qty</p>
-                    <button type="button" @click="removeFromCart(item)">
-                        Remove
-                    </button>
-                </div>
-            </div>
-        </div>
+        <NavBar />
 
         <slot />
     </div>

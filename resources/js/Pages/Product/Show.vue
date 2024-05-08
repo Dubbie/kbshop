@@ -2,6 +2,8 @@
 import GuestLayout from "@/Layouts/GuestLayout.vue";
 import { onMounted, ref, inject } from "vue";
 import { useForm } from "@inertiajs/vue3";
+import InputLabel from "@/Components/InputLabel.vue";
+import SelectInput from "@/Components/SelectInput.vue";
 
 const props = defineProps({
     product: Object,
@@ -19,7 +21,33 @@ const getFormData = () => {
 
     return attributes;
 };
+
+const getAttributesWithOptions = () => {
+    let attributes = [];
+
+    Object.keys(props.attributes).forEach((key) => {
+        const attr = props.attributes[key];
+        let options = [];
+
+        Object.keys(attr.options).forEach((optionKey) => {
+            options.push({
+                label: attr.options[optionKey],
+                value: parseInt(optionKey),
+            });
+        });
+
+        attributes.push({
+            label: attr.label,
+            id: attr.id,
+            options: options,
+        });
+    });
+
+    return attributes;
+};
+
 const form = useForm(getFormData());
+const attributeOptions = getAttributesWithOptions();
 
 const emitter = inject("emitter");
 const price = ref(0);
@@ -37,58 +65,78 @@ const handleAddToCart = () => {
         });
 };
 
-const getPrice = () => {
+const getProductDetails = () => {
     axios
         .get(route("api.product.variant", props.product.id), {
             params: form.data(),
         })
         .then((response) => {
-            price.value = response.data.price;
+            price.value = formatPrice(response.data.price);
             sku.value = response.data.code;
         });
 };
 
+const formatPrice = (price) => {
+    // no decimals, space between thousands
+    return price.toLocaleString("en-US");
+};
+
 onMounted(() => {
-    getPrice();
+    getProductDetails();
 });
 </script>
 
 <template>
     <GuestLayout title="Product">
-        <div class="grid grid-cols-2 gap-6">
-            <div>
-                <img src="https://picsum.photos/400/600" :alt="product.name" />
-            </div>
-            <div>
-                <h1 class="text-3xl font-bold">{{ product.name }}</h1>
-
+        <div class="max-w-7xl mx-auto px-4 mt-20 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 gap-20">
                 <div>
-                    <div v-for="attribute in attributes">
-                        <p>{{ attribute.label }}</p>
-
-                        <select
-                            :name="attribute.label"
-                            :id="attribute.label"
-                            v-model="form[attribute.id]"
-                            @change="getPrice"
-                        >
-                            <option
-                                v-for="(option, index) in attribute.options"
-                                :value="parseInt(index)"
-                            >
-                                {{ option }}
-                            </option>
-                        </select>
+                    <img
+                        src="https://picsum.photos/600/600"
+                        :alt="product.name"
+                        class="rounded-2xl shadow shadow-zinc-800/20"
+                    />
+                </div>
+                <div>
+                    <div class="mb-6">
+                        <h1 class="text-3xl font-bold mb-1">
+                            {{ product.name }}
+                        </h1>
                     </div>
-                </div>
 
-                <div>
-                    <p>Price</p>
-                    <p>{{ price }} €</p>
-                </div>
+                    <div class="space-y-3">
+                        <div v-for="attribute in attributeOptions">
+                            <InputLabel
+                                for="name"
+                                :value="attribute.label"
+                                class="mb-1"
+                            />
 
-                <div>
-                    <button @click="handleAddToCart">Add to cart</button>
+                            <SelectInput
+                                :model-value="form[attribute.id]"
+                                :options="attribute.options"
+                                @change="getProductDetails"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="mt-6">
+                        <p
+                            class="font-medium text-zinc-500 text-sm leading-none"
+                        >
+                            Price
+                        </p>
+                        <p class="font-bold text-3xl whitespace-nowrap">
+                            {{ price }} €
+                        </p>
+                    </div>
+
+                    <button
+                        @click="handleAddToCart"
+                        class="bg-indigo-500 text-white font-bold py-2 px-4 rounded mt-3 hover:bg-indigo-700"
+                    >
+                        Add to cart
+                    </button>
                 </div>
             </div>
         </div>
