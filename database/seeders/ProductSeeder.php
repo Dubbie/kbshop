@@ -17,20 +17,9 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
         $attributesMapping = Attribute::pluck('id', 'name')->toArray();
-        $attributes = Attribute::with('attributeOptions')->get()->toArray();
 
         // Generate all possible combinations
-        $attributeCombinations = [[]];
-        foreach ($attributes as $attribute) {
-            $attributeValues = array_column($attribute['attribute_options'], 'value');
-            $newCombinations = [];
-            foreach ($attributeCombinations as $combination) {
-                foreach ($attributeValues as $value) {
-                    $newCombinations[] = array_merge($combination, [$attribute['name'] => $value]);
-                }
-            }
-            $attributeCombinations = $newCombinations;
-        }
+        $attributeCombinations = $this->getAttributeCombinations();
 
         $productsConfig = [];
         foreach ($attributeCombinations as $attributeCombination) {
@@ -45,6 +34,28 @@ class ProductSeeder extends Seeder
 
         // Loop through products, create entries, and assign SKUs
         foreach ($productsConfig as $productData) {
+            $this->createSkus($productData, $attributesMapping);
+        }
+    }
+
+    private function getAttributeCombinations(): array {
+        $attributes = Attribute::with('attributeOptions')->get()->toArray();
+        $attributeCombinations = [[]];
+        foreach ($attributes as $attribute) {
+            $attributeValues = array_column($attribute['attribute_options'], 'value');
+            $newCombinations = [];
+            foreach ($attributeCombinations as $combination) {
+                foreach ($attributeValues as $value) {
+                    $newCombinations[] = array_merge($combination, [$attribute['name'] => $value]);
+                }
+            }
+            $attributeCombinations = $newCombinations;
+        }
+        return $attributeCombinations;
+    }
+
+    private function createSkus(array $productData, array $attributesMapping): void
+    {
             DB::transaction(function () use ($productData, $attributesMapping) {
                 // Create product entry
                 $product = Product::where('name', $productData['name'])->first();
@@ -80,6 +91,5 @@ class ProductSeeder extends Seeder
                     }
                 }
             });
-        }
     }
 }
