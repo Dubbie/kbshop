@@ -16,4 +16,9 @@ class AttributeOption extends Model
     {
         return $this->belongsTo(Attribute::class);
     }
+
+    public function skus()
+    {
+        return $this->belongsToMany(Sku::class, 'attribute_option_sku');
+    }
 }

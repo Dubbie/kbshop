@@ -49,6 +49,7 @@ const getAttributesWithOptions = () => {
 
 const form = useForm(getFormData());
 const attributeOptions = getAttributesWithOptions();
+console.log(attributeOptions);
 
 const emitter = inject("emitter");
 const price = ref(0);
@@ -80,6 +81,11 @@ const getProductDetails = () => {
 const formatPrice = (price) => {
     // no decimals, space between thousands
     return price.toLocaleString("en-US");
+};
+
+const handleChange = (id, value) => {
+    form[id] = value;
+    getProductDetails();
 };
 
 onMounted(() => {
@@ -116,7 +122,9 @@ onMounted(() => {
                             <SelectInput
                                 :model-value="form[attribute.id]"
                                 :options="attribute.options"
-                                @change="getProductDetails"
+                                @update:model-value="
+                                    handleChange(attribute.id, $event)
+                                "
                             />
                         </div>
                     </div>

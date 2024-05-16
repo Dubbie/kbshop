@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -21,6 +20,6 @@ class Sku extends Model
 
     public function attributeOptions(): BelongsToMany
     {
-        return $this->belongsToMany(AttributeOption::class);
+        return $this->belongsToMany(AttributeOption::class, 'attribute_option_sku');
     }
 }

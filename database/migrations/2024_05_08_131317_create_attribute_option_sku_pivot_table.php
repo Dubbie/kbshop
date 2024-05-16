@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('attribute_option_sku', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('attribute_option_id')->constrained();
-            $table->foreignId('sku_id')->constrained();
+            $table->foreignId('attribute_option_id');
+            $table->foreignId('sku_id');
+            $table->primary(['attribute_option_id', 'sku_id']);
         });
     }
 
