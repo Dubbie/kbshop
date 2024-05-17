@@ -11,5 +11,6 @@ Route::get('/user', function (Request $request) {
 
 Route::group(['prefix' => 'products'], function () {
     Route::get('/{product}/variant', [ProductApiController::class, 'getVariant'])->name('api.product.variant');
+    Route::post('/store', [ProductApiController::class, 'store'])->name('api.product.store');
 });
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -27,6 +28,10 @@ class ProductApiController extends Controller
         }
 
         return $variant;
+    }
+
+    public function store(StoreProductRequest $request) {
+        dd($request->validated());
     }
 
     private function checkAttributesMatch(array $input, array $found) {

@@ -1,6 +1,6 @@
 <script setup>
 import AppButton from "@/Components/AppButton.vue";
-import { computed, ref, watch } from "vue";
+import { computed } from "vue";
 import CreateAttribute from "./CreateAttribute.vue";
 
 const props = defineProps({

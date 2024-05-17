@@ -14,6 +14,9 @@ const form = useForm({
 
 const handleSave = () => {
     console.log(form.data());
+    axios.post(route("api.product.store"), form.data()).then((response) => {
+        console.log(response);
+    });
 };
 </script>
 
@@ -48,7 +51,8 @@ const handleSave = () => {
                         </div>
 
                         <CreateVariants v-model="form.variants" />
-                        <div class="mt-10">
+
+                        <div>
                             <AppButton @click="handleSave">Save</AppButton>
                         </div>
                     </div>
