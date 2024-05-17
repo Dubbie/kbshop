@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Api\CartApiController;
+use App\Http\Controllers\PageController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -27,7 +29,12 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+    Route::group([
+        'middleware' => 'role:Super Admin',
+    ], function () {
+
+        Route::get('/dashboard', [PageController::class, 'dashboard'])->name('dashboard');
+        Route::get('/admin/products', [AdminProductController::class, 'index'])->name('admin.product.index');
+        Route::get('/admin/products/new', [AdminProductController::class, 'create'])->name('admin.product.create');
+    });
 });

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class ProductController extends Controller
@@ -32,7 +31,7 @@ class ProductController extends Controller
     {
         $attributes = [];
 
-foreach ($skus as $sku) {
+        foreach ($skus as $sku) {
             foreach ($sku->attributeOptions as $option) {
                 $attributeName = $option->attribute->name;
 

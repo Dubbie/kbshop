@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from "vue";
+import { Link } from "@inertiajs/vue3";
 
 const props = defineProps({
     type: {
@@ -13,6 +14,10 @@ const props = defineProps({
     outline: {
         type: Boolean,
         default: false,
+    },
+    href: {
+        type: String,
+        default: null,
     },
 });
 
@@ -71,11 +76,13 @@ const colorClasses = computed(() => {
 </script>
 
 <template>
-    <button
-        :type="props.type"
-        class="text-sm font-semibold px-3 py-1.5 rounded-lg"
+    <component
+        :is="href ? Link : 'button'"
+        :type="type"
+        class="inline-flex text-sm font-semibold px-3 py-1.5 rounded-lg"
         :class="colorClasses"
+        :href="href"
     >
         <slot />
-    </button>
+    </component>
 </template>
