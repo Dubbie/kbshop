@@ -27,7 +27,7 @@ const colorClasses = computed(() => {
         return {
             "dark/zinc": "ring-1 ring-zinc-800 text-zinc-800",
             dark: "ring-1 ring-zinc-800 text-zinc-800",
-            zinc: "ring-1 ring-zinc-800 text-zinc-800",
+            zinc: "ring-1 ring-zinc-300 text-zinc-600 hover:bg-zinc-50 hover:ring-zinc-400",
             white: "ring-1 ring-zinc-800 text-zinc-800",
             red: "ring-1 ring-red-600 text-red-600",
             orange: "ring-1 ring-orange-500 text-orange-500",
