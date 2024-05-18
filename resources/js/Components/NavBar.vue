@@ -34,15 +34,25 @@ const isActive = (href) => {
             </div>
 
             <div class="flex items-center">
-                <NavLink :href="route('login')" :active="isActive('login')"
-                    >Login</NavLink
-                >
-                <div class="h-6 w-px bg-gray-200 mx-2"></div>
-                <NavLink
-                    :href="route('register')"
-                    :active="isActive('register')"
-                    >Sign up</NavLink
-                >
+                <template v-if="!$page.props.auth.user">
+                    <NavLink :href="route('login')" :active="isActive('login')"
+                        >Login</NavLink
+                    >
+                    <div class="h-6 w-px bg-gray-200 mx-2"></div>
+                    <NavLink
+                        :href="route('register')"
+                        :active="isActive('register')"
+                        >Sign up</NavLink
+                    >
+                </template>
+
+                <template v-else>
+                    <NavLink
+                        :href="route('dashboard')"
+                        :active="isActive('dashboard')"
+                        >{{ $page.props.auth.user.name }}</NavLink
+                    >
+                </template>
 
                 <CartButton class="ml-4" />
             </div>

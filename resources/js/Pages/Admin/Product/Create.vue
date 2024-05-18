@@ -37,6 +37,7 @@ const handleSave = () => {
                                 <InputLabel for="name" value="Name" />
                                 <TextInput
                                     placeholder="Product name"
+                                    color="dark"
                                     class="w-full"
                                     v-model="form.name"
                                 />
@@ -47,6 +48,7 @@ const handleSave = () => {
                                 <TextInput
                                     placeholder="Slug"
                                     class="w-full"
+                                    color="dark"
                                     v-model="form.slug"
                                 />
                             </div>

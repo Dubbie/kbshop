@@ -1,4 +1,5 @@
 <script setup>
+import AppButton from "@/Components/AppButton.vue";
 import StatisticsCard from "@/Components/StatisticsCard.vue";
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import {
@@ -6,7 +7,23 @@ import {
     IconUserFilled,
     IconShoppingCartFilled,
     IconArchiveFilled,
+    IconPlus,
 } from "@tabler/icons-vue";
+
+const props = defineProps({
+    products: Object,
+});
+
+const formatDate = (date) => {
+    return new Date(date).toLocaleDateString("en-US", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: false,
+    });
+};
 </script>
 
 <template>
@@ -53,7 +70,58 @@ import {
             </div>
 
             <div class="bg-white rounded mt-6 p-4">
-                <p class="font-bold text-2xl tracking-tight">Products</p>
+                <div class="flex items-center justify-between mb-4">
+                    <p class="font-semibold text-xl tracking-tight">Products</p>
+
+                    <div>
+                        <AppButton :href="route('admin.product.create')">
+                            <IconPlus size="16" stroke-width="3" />
+                            <span>Add new</span>
+                        </AppButton>
+                    </div>
+                </div>
+
+                <table class="w-full">
+                    <thead class="text-sm">
+                        <tr class="border-b">
+                            <th class="px-2 py-1 font-semibold text-center">
+                                No
+                            </th>
+                            <th class="px-2 py-1 font-semibold text-center">
+                                Image
+                            </th>
+                            <th class="px-2 py-1 font-semibold text-start">
+                                Name
+                            </th>
+                            <th class="px-2 py-1 font-semibold text-center">
+                                Updated
+                            </th>
+                            <th class="px-2 py-1 font-semibold text-end">
+                                Views
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm">
+                        <tr v-for="(product, index) in products">
+                            <td class="p-2 text-center">
+                                <p>{{ index + 1 }}</p>
+                            </td>
+                            <td class="p-2">
+                                <img
+                                    src="https://picsum.photos/200"
+                                    class="aspect-square h-8 block mx-auto rounded"
+                                />
+                            </td>
+                            <td class="p-2 w-full">{{ product.name }}</td>
+                            <td class="p-2 text-center whitespace-nowrap">
+                                {{ formatDate(product.updated_at) }}
+                            </td>
+                            <td class="p-2 text-end">
+                                <p>{{ product.views || 0 }}</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </AdminLayout>

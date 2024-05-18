@@ -20,12 +20,12 @@ const isActive = (href) => {
                 <img
                     :src="$page.props.auth.user.profile_photo_url"
                     alt=""
-                    class="size-18 rounded-3xl mb-2"
+                    class="size-14 rounded-2xl mb-1"
                 />
                 <p class="font-bold text-lg">
                     {{ $page.props.auth.user.name }}
                 </p>
-                <p class="text-sm text-zinc-300">
+                <p class="text-xs text-zinc-300">
                     {{ $page.props.auth.user.email }}
                 </p>
             </div>
