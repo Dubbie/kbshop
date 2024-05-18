@@ -50,8 +50,8 @@ const colorClasses = computed(() => {
     }
 
     return {
-        "dark/zinc": "bg-zinc-800 text-white",
-        dark: "bg-zinc-800 text-white hover:bg-zinc-700",
+        "dark/zinc": "bg-zinc-900 text-white hover:bg-zinc-700",
+        dark: "bg-zinc-900 text-white hover:bg-zinc-700",
         zinc: "bg-zinc-600 text-white hover:bg-zinc-500",
         white: "bg-white text-zinc-800 ring-1 ring-zinc-300 hover:bg-zinc-50 hover:ring-zinc-400",
         red: "bg-red-600 text-white hover:bg-red-500",
@@ -79,7 +79,7 @@ const colorClasses = computed(() => {
     <component
         :is="href ? Link : 'button'"
         :type="type"
-        class="inline-flex text-sm font-semibold px-3 py-1.5 rounded-lg"
+        class="inline-flex items-center space-x-1 text-sm font-semibold px-3 py-1.5 rounded"
         :class="colorClasses"
         :href="href"
     >

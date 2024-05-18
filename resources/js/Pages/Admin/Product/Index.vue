@@ -1,35 +1,87 @@
 <script setup>
 import AppButton from "@/Components/AppButton.vue";
 import AdminLayout from "@/Layouts/AdminLayout.vue";
+import { IconPlus, IconPencil, IconTrash } from "@tabler/icons-vue";
 
 const props = defineProps({
     products: Object,
 });
+
+const formatDate = (date) => {
+    return new Date(date).toLocaleDateString("en-US", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: false,
+    });
+};
+
+const iconSize = 20;
+const iconStroke = 1.5;
 </script>
 
 <template>
     <AdminLayout>
-        <div>
-            <div class="max-w-7xl mx-auto px-4 mt-20 sm:px-6 lg:px-8">
-                <AppButton :href="route('admin.product.create')"
-                    >Add product</AppButton
-                >
+        <template #header>
+            <h1 class="text-xl font-bold">Products</h1>
 
+            <div class="flex space-x-2">
+                <AppButton :href="route('admin.product.create')">
+                    <IconPlus size="16" stroke-width="3" />
+                    <span>Add new</span>
+                </AppButton>
+            </div>
+        </template>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded p-4">
                 <table class="w-full">
-                    <thead>
-                        <tr>
-                            <th class="text-start">Name</th>
-                            <th>Updated</th>
-                            <th>Actions</th>
+                    <thead class="text-sm">
+                        <tr class="border-b">
+                            <th class="px-2 py-1 font-semibold text-center">
+                                Image
+                            </th>
+                            <th class="px-2 py-1 font-semibold text-start">
+                                Name
+                            </th>
+                            <th class="px-2 py-1 font-semibold text-center">
+                                Updated
+                            </th>
+                            <th class="px-2 py-1 font-semibold text-end">
+                                Actions
+                            </th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="text-sm">
                         <tr v-for="product in products">
-                            <td>{{ product.name }}</td>
-                            <td class="text-center">
-                                {{ product.updated_at }}
+                            <td class="px-2 py-1">
+                                <img
+                                    src="https://picsum.photos/200"
+                                    class="aspect-square h-8 block mx-auto rounded"
+                                />
                             </td>
-                            <td></td>
+                            <td class="px-2 py-1">{{ product.name }}</td>
+                            <td class="px-2 py-1 text-center">
+                                {{ formatDate(product.updated_at) }}
+                            </td>
+                            <td class="px-2 py-1 text-end">
+                                <div class="flex justify-end space-x-1">
+                                    <div>
+                                        <IconPencil
+                                            :size="iconSize"
+                                            :stroke-width="iconStroke"
+                                        />
+                                    </div>
+                                    <div>
+                                        <IconTrash
+                                            :size="iconSize"
+                                            :stroke-width="iconStroke"
+                                        />
+                                    </div>
+                                </div>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

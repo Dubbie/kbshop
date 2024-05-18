@@ -22,14 +22,16 @@ const handleSave = () => {
 
 <template>
     <AdminLayout>
-        <div class="max-w-7xl mx-auto px-4 mt-10 sm:px-6 lg:px-8">
-            <h1 class="text-3xl font-semibold mb-6">Add product</h1>
+        <template #header>
+            <h1 class="text-2xl font-semibold">Add product</h1>
+        </template>
 
-            <div class="grid grid-cols-4 gap-6">
-                <div class="col-span-3">
-                    <div class="space-y-3">
-                        <div class="space-y-3 border rounded-xl p-3">
-                            <p class="text-lg font-semibold">Product basics</p>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded p-4">
+                <div class="grid grid-cols-4 gap-6">
+                    <div class="col-span-3">
+                        <div class="space-y-3">
+                            <p class="text-lg font-semibold">Basics</p>
 
                             <div>
                                 <InputLabel for="name" value="Name" />
@@ -48,19 +50,23 @@ const handleSave = () => {
                                     v-model="form.slug"
                                 />
                             </div>
-                        </div>
 
-                        <CreateVariants v-model="form.variants" />
+                            <CreateVariants v-model="form.variants" />
 
-                        <div>
-                            <AppButton @click="handleSave">Save</AppButton>
+                            <div v-if="form.variants.length > 0">
+                                <p>
+                                    Please fill out the SKUs for the variants!
+                                </p>
+                            </div>
+
+                            <div>
+                                <AppButton @click="handleSave">Save</AppButton>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div>
-                    <div class="border p-3 rounded-xl">
-                        <p>Category etc</p>
+                    <div>
+                        <p>Category, publishing</p>
                     </div>
                 </div>
             </div>

@@ -43,16 +43,32 @@ const emit = defineEmits(["update:model-value", "delete", "edit", "done"]);
             <div>
                 <p class="text-sm">Option values</p>
                 <div class="flex flex-col space-y-2">
-                    <TextInput
-                        placeholder="Add option value"
+                    <div
+                        class="flex space-x-2 items-center"
                         v-for="(option, index) in modelValue.options"
                         :key="index"
-                        :model-value="modelValue.options[index]"
-                        @update:model-value="
-                            (newValue) =>
-                                handleOptionValueChange(newValue, index)
-                        "
-                    />
+                    >
+                        <TextInput
+                            placeholder="Add option value"
+                            :model-value="modelValue.options[index]"
+                            class="w-full"
+                            @update:model-value="
+                                (newValue) =>
+                                    handleOptionValueChange(newValue, index)
+                            "
+                        />
+
+                        <AppButton
+                            outline
+                            color="zinc"
+                            v-if="
+                                modelValue.options.length > 2 &&
+                                modelValue.options[index] !== ''
+                            "
+                            @click="modelValue.options.splice(index, 1)"
+                            >Remove</AppButton
+                        >
+                    </div>
                 </div>
             </div>
 

@@ -1,16 +1,27 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from "vue";
 
-defineProps({
+const props = defineProps({
     modelValue: String,
+    color: {
+        type: String,
+        default: "white",
+    },
 });
 
-defineEmits(['update:modelValue']);
+defineEmits(["update:modelValue"]);
 
 const input = ref(null);
 
+const classes = computed(() => {
+    return {
+        white: "bg-white ring-zinc-300 focus:ring-2 focus:ring-indigo-500",
+        dark: "bg-zinc-100 ring-transparent focus:ring-2 focus:ring-indigo-500",
+    }[props.color];
+});
+
 onMounted(() => {
-    if (input.value.hasAttribute('autofocus')) {
+    if (input.value.hasAttribute("autofocus")) {
         input.value.focus();
     }
 });
@@ -21,8 +32,9 @@ defineExpose({ focus: () => input.value.focus() });
 <template>
     <input
         ref="input"
-        class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+        class="px-3 py-1.5 ring-1 border-none rounded focus:outline-none"
+        :class="classes"
         :value="modelValue"
         @input="$emit('update:modelValue', $event.target.value)"
-    >
+    />
 </template>
