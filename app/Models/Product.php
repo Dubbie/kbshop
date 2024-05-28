@@ -19,10 +19,4 @@ class Product extends Model
     {
         return $this->hasMany(Sku::class);
     }
-
-    public function scopeBaseProducts($query)
-    {
-        // Count the related skus, and only return products with 1 sku
-        return $query->where('type', 'product')->withCount('skus')->having('skus_count', '=', 1);
-    }
 }
