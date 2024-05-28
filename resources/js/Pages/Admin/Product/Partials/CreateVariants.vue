@@ -38,6 +38,13 @@ const handleAttributeUpdate = (newValue, index) => {
     emit("update:model-value", newAttributes);
 };
 
+const handleDelete = (index) => {
+    // Remove the attribute
+    const newAttributes = [...props.modelValue];
+    newAttributes.splice(index, 1);
+    emit("update:model-value", newAttributes);
+};
+
 const emit = defineEmits(["update:model-value"]);
 </script>
 
@@ -54,7 +61,7 @@ const emit = defineEmits(["update:model-value"]);
                     @update:model-value="
                         (newValue) => handleAttributeUpdate(newValue, index)
                     "
-                    @delete="() => modelValue.splice(index, 1)"
+                    @delete="() => handleDelete(index)"
                     @done="() => (attribute.editing = false)"
                     @edit="() => (attribute.editing = true)"
                 />

@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('attribute_id')->constrained();
             $table->string('value');
+            $table->foreignId('sku_id')->nullable()->constrained();
+            $table->smallInteger('quantity')->default(1);
             $table->timestamps();
         });
     }

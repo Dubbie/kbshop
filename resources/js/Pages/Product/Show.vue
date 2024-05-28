@@ -41,6 +41,7 @@ const getAttributesWithOptions = () => {
             label: attr.label,
             id: attr.id,
             options: options,
+            isVisible: attr.is_visible,
         });
     });
 
@@ -49,11 +50,11 @@ const getAttributesWithOptions = () => {
 
 const form = useForm(getFormData());
 const attributeOptions = getAttributesWithOptions();
-console.log(attributeOptions);
 
 const emitter = inject("emitter");
 const price = ref(0);
 const sku = ref(null);
+const kit = ref(null);
 
 const handleAddToCart = () => {
     axios
@@ -68,6 +69,23 @@ const handleAddToCart = () => {
 };
 
 const getProductDetails = () => {
+    if (props.product.type === "kit") {
+        getKit();
+    } else getVariant();
+};
+
+const getKit = () => {
+    axios
+        .get(route("api.product.kit", props.product.id), {
+            params: form.data(),
+        })
+        .then((response) => {
+            kit.value = response.data;
+            price.value = formatPrice(response.data.price);
+        });
+};
+
+const getVariant = () => {
     axios
         .get(route("api.product.variant", props.product.id), {
             params: form.data(),
@@ -112,7 +130,11 @@ onMounted(() => {
                     </div>
 
                     <div class="space-y-3">
-                        <div v-for="attribute in attributeOptions">
+                        <div
+                            v-for="attribute in attributeOptions.filter(
+                                (a) => a.isVisible,
+                            )"
+                        >
                             <InputLabel
                                 for="name"
                                 :value="attribute.label"

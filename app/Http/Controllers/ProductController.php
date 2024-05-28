@@ -38,6 +38,7 @@ class ProductController extends Controller
                 if (!isset($attributes[$attributeName]['id'])) {
                     $attributes[$attributeName]['id'] = $option->attribute->id;
                     $attributes[$attributeName]['label'] = $attributeName;
+                    $attributes[$attributeName]['is_visible'] = $option->attribute->is_visible;
                     $attributes[$attributeName]['options'] = [];
                 }
 

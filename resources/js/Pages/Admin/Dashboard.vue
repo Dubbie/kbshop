@@ -27,7 +27,7 @@ const formatDate = (date) => {
 </script>
 
 <template>
-    <AdminLayout background>
+    <AdminLayout>
         <div class="max-w-7xl mx-auto px-4 pt-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-4 gap-6">
                 <div class="bg-white rounded p-4 row-span-2 col-span-2">

@@ -14,14 +14,16 @@ const props = defineProps({
     },
     modelValue: {
         type: [Number, String],
-        required: true,
     },
 });
 
 const selectedItem = ref(props.modelValue);
 
 const selectedLabel = computed(() => {
-    return props.options.find((item) => item.value == selectedItem.value).label;
+    return (
+        props.options.find((item) => item.value == selectedItem.value)?.label ||
+        "Please choose..."
+    );
 });
 
 const emit = defineEmits(["update:model-value"]);
@@ -42,7 +44,7 @@ watch(
         @update:model-value="emit('update:model-value', $event)"
     >
         <ListboxButton
-            class="border border-zinc-300 rounded-md px-3 py-1.5 text-sm flex items-center justify-between"
+            class="border-none ring-1 ring-zinc-300 rounded-lg px-3 py-1.5 leading-[1.33rem] text-sm flex items-center justify-between w-full"
         >
             <p>{{ selectedLabel }}</p>
             <svg

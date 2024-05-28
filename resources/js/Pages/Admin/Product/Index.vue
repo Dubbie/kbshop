@@ -20,6 +20,20 @@ const formatDate = (date) => {
 
 const iconSize = 20;
 const iconStroke = 1.5;
+
+const deleteProduct = (product) => {
+    if (confirm("Are you sure you want to delete this product?")) {
+        axios
+            .delete(route("api.product.destroy", product.id))
+            .then(() => {
+                console.log("Product deleted");
+                window.location.reload();
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+};
 </script>
 
 <template>
@@ -78,6 +92,7 @@ const iconStroke = 1.5;
                                         <IconTrash
                                             :size="iconSize"
                                             :stroke-width="iconStroke"
+                                            @click="deleteProduct(product)"
                                         />
                                     </div>
                                 </div>

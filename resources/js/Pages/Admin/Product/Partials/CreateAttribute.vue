@@ -36,7 +36,7 @@ const emit = defineEmits(["update:model-value", "delete", "edit", "done"]);
                 <TextInput
                     placeholder="Option name"
                     v-model="modelValue.name"
-                    class="w-full"
+                    class="w-full text-sm"
                     @change="$emit('update:model-value', modelValue)"
                 />
             </div>
@@ -51,7 +51,7 @@ const emit = defineEmits(["update:model-value", "delete", "edit", "done"]);
                         <TextInput
                             placeholder="Add option value"
                             :model-value="modelValue.options[index]"
-                            class="w-full"
+                            class="w-full text-sm"
                             @update:model-value="
                                 (newValue) =>
                                     handleOptionValueChange(newValue, index)

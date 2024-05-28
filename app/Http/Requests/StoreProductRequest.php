@@ -24,7 +24,12 @@ class StoreProductRequest extends FormRequest
         return [
             'name' => 'required',
             'slug' => 'required|unique:products',
-            'variants' => 'required|array|min:1',
+            'variants' => 'nullable',
+            'kitOptions' => 'nullable',
+            'sku' => 'required',
+            'skus' => 'nullable',
+            'type' => 'required',
+            'price' => 'required|numeric',
         ];
     }
 }

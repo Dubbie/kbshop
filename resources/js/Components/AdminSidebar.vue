@@ -48,6 +48,9 @@ const isActive = (href) => {
                     <IconTag :size="iconSize" :stroke-width="iconStroke" />
                     <p>Products</p>
                 </SidebarNavLink>
+                <SidebarNavLink :href="route('storefront')">
+                    <p>Check store</p>
+                </SidebarNavLink>
             </div>
         </div>
     </div>
